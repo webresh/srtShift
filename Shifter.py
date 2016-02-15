@@ -203,5 +203,5 @@ def main():
     subs.rename_old_file()
     subs.write_new_file()
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
