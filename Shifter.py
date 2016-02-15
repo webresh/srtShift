@@ -6,6 +6,10 @@ from itertools import groupby
 from datetime import datetime
 from decimal import Decimal
 
+__author__ = "Michael Livs"
+__version__ = "1.0"
+__email__ = "livsMichael@gmail.com"
+
 
 class subtitles(object):
 
@@ -25,10 +29,10 @@ class subtitles(object):
         self.parsed_subs = []
 
     def chunk_subs(self):
-        '''
+        """
         Split "chunks" of our str file, delimited by blank lines.
         Returns a list that contains the content of the file
-        '''
+        """
 
         with open(self.file_path) as file:
             self.chunked_subtitles = [
@@ -36,7 +40,7 @@ class subtitles(object):
                 (file, lambda x: bool(x.strip())) if b]
 
     def parse_file(self):
-        '''
+        """
         Parsing the chunked file into a list of named tuples.
         This function transforms the time code that is in the file into a
         representation in seconds:
@@ -48,7 +52,7 @@ class subtitles(object):
         (decimal) start   - the start time of the subtitles
         (decimal) end     - the end time of the subtitles
         (string[]) content- a list of the content of the subtitles file
-        '''
+        """
 
         if self.chunked_subtitles:
 
@@ -84,10 +88,10 @@ class subtitles(object):
 
     @staticmethod
     def timecode_to_sec(timecode):
-        '''
+        """
         Read the time code and represent it using seconds and microseconds.
         Returns a float value of the time code.
-        '''
+        """
         # Read time code in known format
         time = datetime.strptime(timecode, '%H:%M:%S,%f')
 
@@ -98,10 +102,10 @@ class subtitles(object):
 
     @staticmethod
     def sec_to_timecode(sec):
-        '''
+        """
         Read the second time representation and turn to time code.
         Returns a string time code representation of a given amount of seconds.
-        '''
+        """
 
         # using only the value that is after the decimal point
         ms = str(sec - int(sec))[2:5]
@@ -114,16 +118,16 @@ class subtitles(object):
                 {"hours": h, "minutes": m, "seconds": s, "microseconds": ms})
 
     def rename_old_file(self):
-        '''
+        """
         Renames the old file
-        '''
+        """
         os.rename(self.file_path, self.file_path[
                   :self.file_path.__len__() - 4] + '_old.srt')
 
     def write_new_file(self):
-        '''
+        """
         Writes new file with the shifted times, also fixes indices if requested
-        '''
+        """
 
         if self.parsed_subs:
 
