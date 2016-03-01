@@ -184,8 +184,12 @@ def main():
     if options.path.startswith('"') and options.path.endswith('"'):
         options.path = options.path[1:-1]
     if not os.path.isfile(options.path) and not os.path.exists(options.path):
+        if options.runner:
+            raise FileNotFoundError
         options.path = None
     if not isinstance(options.shift, float):
+        if options.runner:
+            raise TypeError
         options.float = None
 
     # Keeps looping while the path variable is not a valid path to an srt file
