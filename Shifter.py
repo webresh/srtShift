@@ -174,9 +174,15 @@ def main():
                       help='Shift in seconds', type='float')
     parser.add_option('-i', '--index', dest='index', action="store_true",
                       help='Run fix indices option')
+    parser.add_option('-r', ' --runner', dest='runner', defualt=False,
+                      action="store_true",
+                      help='Indicates that the module is being ran by GUI')
 
     (options, _) = parser.parse_args()
 
+    # Validate  user input
+    if options.path.startswith('"') and options.path.endswith('"'):
+        options.path = options.path[1:-1]
     if not os.path.isfile(options.path) and not os.path.exists(options.path):
         options.path = None
     if not isinstance(options.shift, float):
