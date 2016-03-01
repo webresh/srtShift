@@ -177,9 +177,19 @@ def main():
 
     (options, _) = parser.parse_args()
 
+    if not os.path.isfile(options.path) and not os.path.exists(options.path):
+        options.path = None
+    if not isinstance(options.shift, float):
+        options.float = None
+
     # Keeps looping while the path variable is not a valid path to an srt file
     while options.path is None:
-        options.path = input('Enter file path: ')
+
+        if options.path.startswith('"') and options.path.endswith('"'):
+            options.path = options.path[1:-1]
+
+        options.path = input("Enter file path: ")
+
         if os.path.isfile(options.path) and os.path.exists(options.path):
 
             _, file_extension = os.path.splitext(options.path)
